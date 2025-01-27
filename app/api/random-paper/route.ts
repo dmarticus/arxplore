@@ -1,49 +1,43 @@
 import { NextResponse } from "next/server";
 import { parseArxivXml } from "@/utils/parseArxivXml";
 
-export async function GET() {
-  const categories = [
-    // Computer Science
-    "cs.AI", // Artificial Intelligence
-    "cs.CL", // Computation and Language
-    "cs.CV", // Computer Vision
-    "cs.LG", // Machine Learning
-    "cs.RO", // Robotics
-    "cs.NE", // Neural and Evolutionary Computing
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const selectedCategories = searchParams.get("categories")?.split(",") || [];
 
-    // Mathematics
-    "math.CO", // Combinatorics
-    "math.DS", // Dynamical Systems
-    "math.PR", // Probability
-
-    // Physics
-    "physics.comp-ph", // Computational Physics
-    "physics.data-an", // Data Analysis, Statistics and Probability
-    "physics.soc-ph", // Physics and Society
-
-    // Quantitative Biology
-    "q-bio.BM", // Biomolecules
-    "q-bio.NC", // Neurons and Cognition
-    "q-bio.QM", // Quantitative Methods
-
-    // Quantitative Finance
-    "q-fin.PM", // Portfolio Management
-    "q-fin.ST", // Statistical Finance
-    "q-fin.TR", // Trading and Market Microstructure
-
-    // Statistics
-    "stat.ML", // Machine Learning
-    "stat.ME", // Methodology
-    "stat.AP", // Applications
-  ];
+  // If no categories selected, use all categories
+  const categories =
+    selectedCategories.length > 0
+      ? selectedCategories
+      : [
+          "cs.AI",
+          "cs.CL",
+          "cs.CV",
+          "cs.LG",
+          "cs.RO",
+          "cs.NE",
+          "math.CO",
+          "math.DS",
+          "math.PR",
+          "physics.comp-ph",
+          "physics.data-an",
+          "physics.soc-ph",
+          "q-bio.BM",
+          "q-bio.NC",
+          "q-bio.QM",
+          "q-fin.PM",
+          "q-fin.ST",
+          "q-fin.TR",
+          "stat.ML",
+          "stat.ME",
+          "stat.AP",
+        ];
 
   const randomCategory =
     categories[Math.floor(Math.random() * categories.length)];
 
   try {
-    // Get a random start index (ArXiv typically has hundreds of papers per category)
     const randomStart = Math.floor(Math.random() * 100);
-    // Get more results and then pick one randomly
     const maxResults = 25;
 
     const response = await fetch(
@@ -61,7 +55,6 @@ export async function GET() {
       return NextResponse.json({ error: "No papers found" }, { status: 404 });
     }
 
-    // Pick a random paper from the results
     const randomPaper = papers[Math.floor(Math.random() * papers.length)];
     return NextResponse.json({ paper: randomPaper });
   } catch (error) {
