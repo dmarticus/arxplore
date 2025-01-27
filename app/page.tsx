@@ -25,8 +25,16 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
       <h1 className="text-4xl font-bold mb-8">ArXplore</h1>
-      <Button onClick={fetchRandomPaper} disabled={loading} className="mb-8">
-        {loading ? "Loading..." : "Explore!"}
+      <p className="text-lg text-gray-500 mb-8">
+        Random walks through research papers
+      </p>
+      <Button
+        onClick={fetchRandomPaper}
+        disabled={loading}
+        className="mb-8"
+        size="lg"
+      >
+        {loading ? "Loading..." : "Discover"}
       </Button>
       {paper && <PaperDisplay paper={paper} />}
     </main>

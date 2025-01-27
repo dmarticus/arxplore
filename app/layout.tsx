@@ -5,7 +5,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "ArXplore",
-  description: "Discover random ArXiv papers",
+  description: "Random walks through research papers",
 };
 
 export default function RootLayout({
