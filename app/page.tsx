@@ -16,11 +16,7 @@ export default function Home() {
       const data = await response.json();
       setPaper(data.paper);
     } catch (error) {
-      console.error("Detailed fetch error:", {
-        name: (error as Error).name,
-        message: (error as Error).message,
-        stack: (error as Error).stack,
-      });
+      console.error("Failed to fetch paper:", error);
     } finally {
       setLoading(false);
     }

@@ -20,11 +20,11 @@ interface ArxivEntry {
 
 interface ArxivResponse {
   feed: {
-    entry: ArxivEntry;
+    entry: ArxivEntry | ArxivEntry[];
   };
 }
 
-export function parseArxivXml(xmlString: string): ArxivPaper | null {
+export function parseArxivXml(xmlString: string): ArxivPaper[] | null {
   const parser = new XMLParser({
     ignoreAttributes: false,
     attributeNamePrefix: "@_",
@@ -35,9 +35,11 @@ export function parseArxivXml(xmlString: string): ArxivPaper | null {
     return null;
   }
 
-  const entry = result.feed.entry;
+  const entries = Array.isArray(result.feed.entry)
+    ? result.feed.entry
+    : [result.feed.entry];
 
-  return {
+  return entries.map((entry) => ({
     title: entry.title,
     summary: entry.summary,
     authors: Array.isArray(entry.author)
@@ -50,5 +52,5 @@ export function parseArxivXml(xmlString: string): ArxivPaper | null {
         }))
       : [{ href: entry.link["@_href"], title: entry.link["@_title"] || "" }],
     published: entry.published,
-  };
+  }));
 }
