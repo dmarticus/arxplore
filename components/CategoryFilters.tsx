@@ -183,10 +183,10 @@ export function CategoryFilters({
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-[400px] h-[500px] p-0"
-        side="right"
-        align="start"
-        sideOffset={10}
+        className="w-[90vw] sm:w-[400px] h-[500px] p-0"
+        side="bottom"
+        align="center"
+        sideOffset={4}
       >
         <div className="flex flex-col h-full">
           <div className="sticky top-0 bg-popover p-4 border-b">
@@ -226,7 +226,7 @@ export function CategoryFilters({
                         : "Select All"}
                     </Button>
                   </div>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
                     {items.map((category) => (
                       <Button
                         key={category.id}
