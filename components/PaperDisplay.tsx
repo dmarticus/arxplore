@@ -40,7 +40,7 @@ export function PaperDisplay({ paper }: PaperDisplayProps) {
         {pdfLink && (
           <Button asChild>
             <a href={pdfLink} target="_blank" rel="noopener noreferrer">
-              Read Paper
+              {`Read paper`}
             </a>
           </Button>
         )}
